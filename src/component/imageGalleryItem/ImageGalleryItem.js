@@ -1,15 +1,16 @@
 import React from 'react';
+import style from './ImageGalleryItem.module.css'
 import PropTypes from 'prop-types';
 
 export default function ImageGalleryItem ({ image, setLargeImage }){
 
     const{webformatURL, largeImageURL} = image
     return (
-      <li className='ImageGalleryItem'>
+      <li className={style.ImageGalleryItem}>
         <img
           src={webformatURL}
           alt="super-gallery"
-          className='ImageGalleryItem__image'
+          className={style.ImageGalleryItem__image}
           onClick={() => setLargeImage(largeImageURL)}
         />
       </li>

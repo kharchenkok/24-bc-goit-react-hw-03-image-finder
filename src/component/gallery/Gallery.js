@@ -1,3 +1,4 @@
+import { Modal } from "@material-ui/core";
 import React, { Component } from "react";
 import getFetch from "../../services/getFetch";
 import ImageGallery from "../imageGallery/ImageGallery";
@@ -15,9 +16,12 @@ export default class Gallery extends Component {
     userQuery: "",
     largeImageUrl: null,
   };
-  // componentDidMount() {}
+  
   componentDidUpdate(prevProp, prevState) {
+
     const { images, userQuery } = this.state;
+    // const prevQuery=prevState.userQuery
+    // const nextQuery=userQuery
     if (prevState.userQuery !== userQuery) {
       this.setState({ loading: true });
       this.getImageFetch();
@@ -37,18 +41,19 @@ export default class Gallery extends Component {
       .then((image) =>
         this.setState((prevState) => ({
           images: [...prevState.images, ...image],
-          page: prevState.page + 1,
+          currentPage: prevState.currentPage + 1,
         }))
       )
-      .catch((error) => this.setState({ error }))
+      .catch((error) => this.setState({error}))
+      // .catch((error) => console.log(error))
       .finally(() => this.setState({ loading: false }));
   };
 
-  handleSubmit = (query) => {
+  handleSearchFormSubmit  = (query) => {
     this.setState({
       images: [],
       userQuery: query,
-      page: 1,
+      currentPage: 1,
     });
   };
   setLargeImage = (url) => {
@@ -59,11 +64,14 @@ export default class Gallery extends Component {
     const { images, loading, error, itemsPerPage,largeImageUrl } = this.state;
     return (
       <>
-        <Searchbar onSubmit={this.handleSubmit}/>
+        <Searchbar handleSearchFormSubmit={this.handleSearchFormSubmit}/>
         {error && <div>Sorry, something went wrong:{error.message}</div>}
         {loading && <LoaderSpiner />}
         {images.length > 0 && <ImageGallery images={images} setLargeImage={this.setLargeImage} />}
-        {images.length >= itemsPerPage && <LoadMoreButton />}
+        {images.length >= itemsPerPage && <LoadMoreButton loadMore={this.getImageFetch}/>}
+        {largeImageUrl && (
+          <Modal onClose={() => this.setLargeImage(null)} src={largeImageUrl}/>
+        )}
       </>
     );
   }

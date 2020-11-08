@@ -1,33 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import style from './Searchbar.module.css'
-
+import style from "./Searchbar.module.css";
 
 export default class Searchbar extends Component {
   state = {
-    inputValue:''
-  }
- 
-  handleInput=e=>{
-    this.setState({inputValue:e.target.value})
-  }
+    inputValue: "",
+  };
 
-  handleSubmit=e=>{
+  handleInput = (e) => {
+    this.setState({ inputValue: e.target.value });
+  };
+
+  handleFormSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state.inputValue)
-    this.setState({inputValue:''})
-  }
+    this.props.handleSearchFormSubmit(this.state.inputValue);
+    this.setState({ inputValue: "" });
+  };
 
   render() {
     return (
       <header className={style.Searchbar}>
-        <form className={style.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={style.SearchForm} onSubmit={this.handleFormSubmit}>
           <button type="submit" className={style.SearchForm__button}>
             <span className={style.SearchForm__buttonLabel}>Search</span>
           </button>
-      
+
           <input
-          onChange={this.handleInput}
+            onChange={this.handleInput}
             className={style.SearchForm__input}
             type="text"
             autoComplete="off"
@@ -36,8 +35,6 @@ export default class Searchbar extends Component {
           />
         </form>
       </header>
-    )
+    );
   }
 }
-
-
