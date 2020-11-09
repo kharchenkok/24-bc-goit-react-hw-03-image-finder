@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default function getFetch(userQuery, currentPage=0, itemsPerPage){
+export default function getFetch(userQuery, currentPage=1, itemsPerPage){
     
        return axios.get(
         
