@@ -1,9 +1,11 @@
-import { Modal } from "@material-ui/core";
+
 import React, { Component } from "react";
 import getFetch from "../../services/getFetch";
 import ImageGallery from "../imageGallery/ImageGallery";
 import LoaderSpiner from "../loaderSpiner/LoaderSpiner";
 import LoadMoreButton from "../loadMoreButton/LoadMoreButton";
+import Modal from "../modal/Modal";
+
 import Searchbar from "../searchbar/Searchbar";
 
 export default class Gallery extends Component {
@@ -37,6 +39,7 @@ export default class Gallery extends Component {
     this.setState({ loading: true });
 
     const { userQuery, currentPage, itemsPerPage } = this.state;
+    
     getFetch(userQuery, currentPage, itemsPerPage)
       .then((image) =>
         this.setState((prevState) => ({
@@ -70,7 +73,7 @@ export default class Gallery extends Component {
         {images.length > 0 && <ImageGallery images={images} setLargeImage={this.setLargeImage} />}
         {images.length >= itemsPerPage && <LoadMoreButton loadMore={this.getImageFetch}/>}
         {largeImageUrl && (
-          <Modal onClose={() => this.setLargeImage(null)} src={largeImageUrl}/>
+          <Modal onClose={this.setLargeImage} src={largeImageUrl}/>
         )}
       </>
     );

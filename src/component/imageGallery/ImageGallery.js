@@ -1,5 +1,5 @@
 import React from 'react';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import style from './ImageGallery.module.css'
 import ImageGalleryItem from '../imageGalleryItem/ImageGalleryItem';
 
@@ -10,7 +10,7 @@ const ImageGallery = ({ images, setLargeImage }) => {
         <ul className={style.ImageGallery}>
         {images.map(image => (
           <ImageGalleryItem
-            key={uuid()}
+            key={uuidv4()}
             image={image}
             setLargeImage={setLargeImage}
           />
